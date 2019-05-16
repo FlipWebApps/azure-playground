@@ -1,0 +1,65 @@
+resources:
+- repo: self
+
+jobs:
+
+#Multi-configuration and multi-agent job options are not exported to YAML. Configure these options using documentation guidance: https://docs.microsoft.com/vsts/pipelines/process/phases
+
+- job: Phase_1
+  displayName: Build and Test
+  condition: succeeded()
+  pool:
+    name: Hosted Ubuntu 1604
+  variables:
+    python.version: '2.7, 3.5, 3.6, 3.7'
+
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python $(python.version)'
+    inputs:
+      versionSpec: '$(python.version)'
+
+  - script: 'python -m pip install --upgrade pip && pip install -r requirements.txt'
+    displayName: 'Install dependencies'
+    enabled: false
+
+  - script: 'pip install flake8 && flake8'
+    displayName: Flake8
+    enabled: false
+    continueOnError: true
+
+  - script: 'pip install pytest && pytest tests --doctest-modules --junitxml=junit/test-results.xml'
+    displayName: pytest
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results **/test-results.xml'
+    inputs:
+      testResultsFiles: '**/test-results.xml'
+      testRunTitle: 'Python $(python.version)'
+
+
+- job: Phase_2
+  displayName: Publish
+  dependsOn: Phase_1
+  condition: succeeded()
+  pool:
+    name: Hosted Ubuntu 1604
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python >= 3.6'
+    inputs:
+      versionSpec: '>= 3.6'
+    enabled: false
+
+  - script: 'python setup.py sdist'
+    displayName: 'Build sdist'
+    enabled: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: dist'
+    inputs:
+      PathtoPublish: dist
+      ArtifactName: dist
+    enabled: false
+
+
