@@ -1,6 +1,10 @@
-Example from: 
+# Azure DevOps example for running python tests
+
+wallet.pt / test_wallet.py example from: 
 
 https://semaphoreci.com/community/tutorials/testing-python-applications-with-pytest
+
+## Running locally
 
 Setup using:
 ```
@@ -18,3 +22,6 @@ Run tests using:
 ```
 pytest -q test_wallet.py
 ```
+
+## Azure DevOps Pipeline
+Configure a new pipeline to reference this repository and the included azure-pipelines.yml
