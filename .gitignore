@@ -1,0 +1,7 @@
+python-testing/htmlcov/
+python-testing/__pycache__/
+python-testing/coverage.xml
+python-testing/.coverage
+python-testing/junit/
+python-webapp/__pycache__/
+python-webapp/python-webapp/

@@ -6,21 +6,32 @@ https://semaphoreci.com/community/tutorials/testing-python-applications-with-pyt
 
 ## Running locally
 
-Setup using:
+### Setup using
 ```
-mkdir pytest_project
-cd pytest_project
-python3 -m venv pytest-env
+cd python-testing
+python -m venv pytest-env
 ```
-Activate environment:
+
+### Activate environment
+Max / Linux
 ```
 source pytest-env/bin/activate
 ```
 
-Run tests using:
+Windows
+```
+python-webapp\Scripts\activate
+```
+
+### Install Dependencies
+```
+pip install -r requirements.txt
+```
+
+### Run using
 
 ```
-pytest -q test_wallet.py
+flask run
 ```
 
 ## Azure DevOps Pipeline
