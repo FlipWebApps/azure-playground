@@ -1,0 +1,44 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "value": "<workspace_name>"
+        },
+        "workspaceLocation": {
+            "value": "<workspace_location>"
+        },
+        "keyvaultName": {
+            "value": "<keyvault_name>"
+        },
+        "keyvaultLocation": {
+            "value": "<keyvault_location>"
+        },
+        "tier": {
+            "value": "standard"
+        },
+        "sku": {
+            "value": "Standard"
+        },
+        "tenant": {
+            "value": "<tenant_id>"
+        },
+        "enabledForDeployment": {
+            "value": false
+        },
+        "enabledForTemplateDeployment": {
+            "value": true
+        },
+        "enabledForDiskEncryption": {
+            "value": false
+        },
+        "networkAcls": {
+            "value": {
+                "defaultAction": "Allow",
+                "bypass": "AzureServices",
+                "virtualNetworkRules": [],
+                "ipRules": []
+            }
+        }
+    }
+}
