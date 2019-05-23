@@ -1,6 +1,12 @@
 resources:
 - repo: self
 
+trigger:
+  batch: true
+  paths:
+    include:
+    - python-testing/*
+
 jobs:
 - job: Phase_1
   displayName: Build and Test

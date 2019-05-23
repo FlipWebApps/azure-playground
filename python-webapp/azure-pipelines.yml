@@ -3,8 +3,15 @@
 #  ConnectedServiceName: '<your-service-connection>'
 #  WebAppName: 'msdocs-flaskpipelines'
 
+
 trigger:
-- master
+  batch: true
+  branches:
+    include: master
+  paths:
+    include:
+    - python-webapp/*
+
 
 pool:
   name: Hosted Ubuntu 1604

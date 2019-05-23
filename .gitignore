@@ -5,3 +5,4 @@ python-testing/.coverage
 python-testing/junit/
 python-webapp/__pycache__/
 python-webapp/python-webapp/
+.idea/
