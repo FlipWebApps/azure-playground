@@ -22,6 +22,10 @@ try{
 "@
 
   Write-Host("Running notebook: " + $notebook + "  --  " + $(Get-Date -Format o))
+  Write-Host($urlRunsSubmit)
+  Write-Host($json)
+  Write-Host($ContentType)
+  Write-Host($token)
 
   $post = Invoke-RestMethod -Method Post -Uri $urlRunsSubmit -Body $json -ContentType $ContentType -Headers @{"Authorization"="Bearer $token"}
 
