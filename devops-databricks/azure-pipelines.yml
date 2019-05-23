@@ -38,4 +38,8 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)/notebook'
     artifactName: notebook
-
+- task: PublishBuildArtifacts@1
+  displayName: Publish CI Build Artifacts
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)/CI'
+    artifactName: CI
