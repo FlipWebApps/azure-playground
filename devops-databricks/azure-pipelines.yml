@@ -24,6 +24,10 @@ steps:
     cp devops-databricks/notebooks/$(NotebookName).py "$(Build.ArtifactStagingDirectory)/notebook/$(NotebookName)-$(Build.SourceVersion).py"
     cp devops-databricks/notebook-run.json.tmpl "$(Build.ArtifactStagingDirectory)/notebook/notebook-run.json.tmpl"
   displayName: 'Include Notebook Build Artifacts'
+- bash: |
+    mkdir -p "$(Build.ArtifactStagingDirectory)/CI"
+    cp devops-databricks/databricks-submit-job.ps1 "$(Build.ArtifactStagingDirectory)/CI/"
+  displayName: 'Include CI Artifacts'
 - task: PublishBuildArtifacts@1
   displayName: Publish ARM Template Build Artifacts
   inputs:
@@ -34,3 +38,4 @@ steps:
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)/notebook'
     artifactName: notebook
+
