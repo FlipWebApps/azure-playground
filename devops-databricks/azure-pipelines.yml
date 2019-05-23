@@ -17,7 +17,7 @@ variables:
 steps:
 - bash: |
     mkdir -p "$(Build.ArtifactStagingDirectory)/arm_template"
-    cp devops-databricks/parameters.json devops-databricks/template.json "$(Build.ArtifactStagingDirectory)/arm_template/"
+    cp devops-databricks/arm-template/parameters.json devops-databricks/arm-template/template.json "$(Build.ArtifactStagingDirectory)/arm_template/"
   displayName: 'Include Azure Resource Manager template Build Artifacts'
 - bash: |
     mkdir -p "$(Build.ArtifactStagingDirectory)/notebook"
