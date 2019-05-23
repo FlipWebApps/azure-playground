@@ -17,13 +17,13 @@ variables:
 steps:
 - bash: |
     mkdir -p "$(Build.ArtifactStagingDirectory)/arm_template"
-    cp parameters.json template.json "$(Build.ArtifactStagingDirectory)/arm_template/"
-  displayName: 'Include Azure Resource Manager templates into Build Artifacts'
+    cp devops-databricks/parameters.json devops-databricks/template.json "$(Build.ArtifactStagingDirectory)/arm_template/"
+  displayName: 'Include Azure Resource Manager template Build Artifacts'
 - bash: |
     mkdir -p "$(Build.ArtifactStagingDirectory)/notebook"
-    cp notebooks/$(NotebookName).py "$(Build.ArtifactStagingDirectory)/notebook/$(NotebookName)-$(Build.SourceVersion).py"
-    cp notebook-run.json.tmpl "$(Build.ArtifactStagingDirectory)/notebook/notebook-run.json.tmpl"
-  displayName: 'Prepare Notebook Build Artifacts'
+    cp devops-databricks/notebooks/$(NotebookName).py "$(Build.ArtifactStagingDirectory)/notebook/$(NotebookName)-$(Build.SourceVersion).py"
+    cp devops-databricks/notebook-run.json.tmpl "$(Build.ArtifactStagingDirectory)/notebook/notebook-run.json.tmpl"
+  displayName: 'Include Notebook Build Artifacts'
 - task: PublishBuildArtifacts@1
   displayName: Publish ARM Template Build Artifacts
   inputs:
