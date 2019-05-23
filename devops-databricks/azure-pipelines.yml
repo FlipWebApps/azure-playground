@@ -1,5 +1,11 @@
 trigger:
-- master
+  batch: true
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - devops-databricks/*
 
 pool:
   vmImage: 'Ubuntu-16.04'
