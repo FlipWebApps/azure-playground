@@ -10,6 +10,8 @@ $urlRunsGet = "https://northeurope.azuredatabricks.net/api/2.0/jobs/runs/get"
 $ContentType = "application/json"
 
 try{
+  # The below is for connecting to an existing cluster
+  <#
   $json = @"
 {
   "run_name": "my spark task",
@@ -20,12 +22,33 @@ try{
   }
 }
 "@
+  #>
+
+  # The below will create a new cluster
+$json = @"
+{
+  "run_name": "my spark task",
+  "new_cluster": {
+	"spark_version": "5.2.x-scala2.11",
+	"node_type_id": "Standard_F4s",
+	"num_workers": 1,
+	"spark_env_vars": {
+		"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+	},
+    "enable_elastic_disk": true
+  },
+  "timeout_seconds": 3600,
+  "notebook_task": {
+    "notebook_path": "$notebook"
+  }
+}
+"@
 
   Write-Host("Running notebook: " + $notebook + "  --  " + $(Get-Date -Format o))
   Write-Host($urlRunsSubmit)
   Write-Host($json)
   Write-Host($ContentType)
-  Write-Host($token)
+  # Write-Host($token)
 
   $post = Invoke-RestMethod -Method Post -Uri $urlRunsSubmit -Body $json -ContentType $ContentType -Headers @{"Authorization"="Bearer $token"}
 
