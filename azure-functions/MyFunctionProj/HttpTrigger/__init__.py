@@ -16,7 +16,7 @@ def main(req: func.HttpRequest, msg: func.Out[func.QueueMessage]) -> str:
 
     if name:
         msg.set(name)
-        return func.HttpResponse(f"Hello {name}!")
+        return func.HttpResponse(f"Hello to {name}!")
     else:
         return func.HttpResponse(
              "Please pass a name on the query string or in the request body",
