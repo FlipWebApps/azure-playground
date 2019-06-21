@@ -6,3 +6,5 @@ python-testing/junit/
 python-webapp/__pycache__/
 python-webapp/python-webapp/
 .idea/
+.env/
+azure-functions/MyFunctionProj/.vscode/
