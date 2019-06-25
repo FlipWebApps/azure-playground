@@ -9,7 +9,8 @@
       "methods": [
         "get",
         "post"
-      ]
+      ],
+      "route": "products/{category:alpha}/{id:int?}"
     },
     {
       "type": "http",
