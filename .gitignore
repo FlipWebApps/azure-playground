@@ -8,3 +8,4 @@ python-webapp/python-webapp/
 .idea/
 .env/
 azure-functions/MyFunctionProj/.vscode/
+azure-functions/.vscode/
