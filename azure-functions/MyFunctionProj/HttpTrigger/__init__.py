@@ -11,7 +11,7 @@ def main(req: func.HttpRequest, msg: func.Out[func.QueueMessage]) -> str:
     logging.info(f"Route Params: {req.route_params}")
     logging.info(f"Body: {req.get_body()}")
     try:
-        logging.info(f"Body JSON: {request.get_json()}")
+        logging.info(f"Body JSON: {req.get_json()}")
     except ValueError:
         pass
 
