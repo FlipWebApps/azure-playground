@@ -6,6 +6,7 @@ import azure.functions as func
 def main(req: func.HttpRequest, msg: func.Out[func.QueueMessage]) -> str:
     # For testing we log the content
     logging.info(f"HTTP trigger executed!")
+    logging.info(f"Method: {req.method}")
     logging.info(f"Headers: {req.headers}")
     logging.info(f"Params: {req.params}")
     logging.info(f"Route Params: {req.route_params}")
@@ -18,6 +19,10 @@ def main(req: func.HttpRequest, msg: func.Out[func.QueueMessage]) -> str:
     name = req.params.get('name')
     category = req.route_params.get('category')
     id = req.route_params.get('id')
+
+    logging.info(f"Parameter - name: {name}")
+    logging.info(f"Route - category: {category}")
+    logging.info(f"Route - id: {id}")
 
     if not name:
         try:
