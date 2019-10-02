@@ -47,9 +47,6 @@
 		"parameters": {
 			"Source": {
 				"type": "string"
-			},
-			"Target": {
-				"type": "string"
 			}
 		},
 		"annotations": []
