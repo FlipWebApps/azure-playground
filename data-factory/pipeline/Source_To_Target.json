@@ -46,7 +46,8 @@
 		],
 		"parameters": {
 			"Source": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "TestDocument.txt"
 			}
 		},
 		"annotations": []
