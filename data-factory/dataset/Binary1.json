@@ -2,7 +2,7 @@
 	"name": "Binary1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureBlobStorage1",
+			"referenceName": "Omnia_mhew_mhewstorage",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
