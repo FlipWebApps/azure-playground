@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "Source_To_Target",
+					"referenceName": "SourceToTarget",
 					"type": "PipelineReference"
 				},
 				"parameters": {
