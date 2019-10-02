@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Omnia_mhew_mhewstorage_to",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -32,13 +32,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "Binary1",
+						"referenceName": "TestFileInput_Omnia_mhew_mhewstorage",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Binary2",
+						"referenceName": "TestFileOutput_Omnia_mhew_mhewstorage",
 						"type": "DatasetReference"
 					}
 				]
