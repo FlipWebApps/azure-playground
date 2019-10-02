@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "TestDocument2.txt",
+				"fileName": "@pipeline().Target",
 				"container": "df-test"
 			}
 		}

@@ -1,9 +1,9 @@
 {
-	"name": "pipeline1",
+	"name": "Source_To_Target",
 	"properties": {
 		"activities": [
 			{
-				"name": "Omnia_mhew_mhewstorage_to",
+				"name": "Copy Data",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -44,6 +44,14 @@
 				]
 			}
 		],
+		"parameters": {
+			"Source": {
+				"type": "string"
+			},
+			"Target": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
