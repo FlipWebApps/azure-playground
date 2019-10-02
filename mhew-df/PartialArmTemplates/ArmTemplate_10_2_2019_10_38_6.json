@@ -6,14 +6,6 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "mhew-df"
-		},
-		"Omnia_mhew_mhewstorage_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Omnia_mhew_mhewstorage'"
-		},
-		"Monthly_10022019_Once_properties_SourceToTarget_parameters_Source": {
-			"type": "string",
-			"defaultValue": "TestDocument.txt"
 		}
 	},
 	"variables": {
@@ -57,15 +49,13 @@
 						"inputs": [
 							{
 								"referenceName": "TestFileInput_Omnia_mhew_mhewstorage",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "TestFileOutput_Omnia_mhew_mhewstorage",
-								"type": "DatasetReference",
-								"parameters": {}
+								"type": "DatasetReference"
 							}
 						]
 					}
@@ -77,74 +67,6 @@
 					}
 				},
 				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/TestFileInput_Omnia_mhew_mhewstorage')]",
-				"[concat(variables('factoryId'), '/datasets/TestFileOutput_Omnia_mhew_mhewstorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TestFileInput_Omnia_mhew_mhewstorage')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Omnia_mhew_mhewstorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@pipeline().parameters.Source",
-							"type": "Expression"
-						},
-						"container": "df-test"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Omnia_mhew_mhewstorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TestFileOutput_Omnia_mhew_mhewstorage')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Omnia_mhew_mhewstorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": {
-							"value": "@concat('Copy_', pipeline().parameters.Source)",
-							"type": "Expression"
-						},
-						"container": "df-test"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Omnia_mhew_mhewstorage')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Omnia_mhew_mhewstorage')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('Omnia_mhew_mhewstorage_connectionString')]"
-				}
 			},
 			"dependsOn": []
 		},
@@ -162,7 +84,7 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"Source": "[parameters('Monthly_10022019_Once_properties_SourceToTarget_parameters_Source')]"
+							"Source": "TestDocument.txt"
 						}
 					}
 				],
@@ -199,21 +121,6 @@
 						"intervalInSeconds": 30
 					},
 					"dependsOn": []
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [],
-					"sinks": [],
-					"transformations": [],
-					"script": "\n"
 				}
 			},
 			"dependsOn": []

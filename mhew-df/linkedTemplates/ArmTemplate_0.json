@@ -11,7 +11,7 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Omnia_mhew_mhewstorage'"
 		},
-		"Monthly_10022019_Once_properties_Source_To_Target_parameters_Source": {
+		"Monthly_10022019_Once_properties_SourceToTarget_parameters_Source": {
 			"type": "string",
 			"defaultValue": "TestDocument.txt"
 		}
@@ -29,6 +29,43 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('Omnia_mhew_mhewstorage_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"type": "TumblingWindowTrigger",
+				"typeProperties": {
+					"frequency": "Minute",
+					"interval": 15,
+					"startTime": "2019-10-02T08:34:00.000Z",
+					"delay": "00:00:00",
+					"maxConcurrency": 50,
+					"retryPolicy": {
+						"intervalInSeconds": 30
+					},
+					"dependsOn": []
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [],
+					"sinks": [],
+					"transformations": [],
+					"script": "\n"
 				}
 			},
 			"dependsOn": []
@@ -86,7 +123,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Source_To_Target')]",
+			"name": "[concat(parameters('factoryName'), '/SourceToTarget')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -158,11 +195,11 @@
 				"pipelines": [
 					{
 						"pipelineReference": {
-							"referenceName": "Source_To_Target",
+							"referenceName": "SourceToTarget",
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"Source": "[parameters('Monthly_10022019_Once_properties_Source_To_Target_parameters_Source')]"
+							"Source": "[parameters('Monthly_10022019_Once_properties_SourceToTarget_parameters_Source')]"
 						}
 					}
 				],
@@ -178,7 +215,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Source_To_Target')]"
+				"[concat(variables('factoryId'), '/pipelines/SourceToTarget')]"
 			]
 		}
 	]

@@ -11,7 +11,7 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'Omnia_mhew_mhewstorage'"
 		},
-		"Monthly_10022019_Once_properties_Source_To_Target_parameters_Source": {
+		"Monthly_10022019_Once_properties_SourceToTarget_parameters_Source": {
 			"type": "string",
 			"defaultValue": "TestDocument.txt"
 		},
@@ -45,8 +45,8 @@
 					"Omnia_mhew_mhewstorage_connectionString": {
 						"value": "[parameters('Omnia_mhew_mhewstorage_connectionString')]"
 					},
-					"Monthly_10022019_Once_properties_Source_To_Target_parameters_Source": {
-						"value": "[parameters('Monthly_10022019_Once_properties_Source_To_Target_parameters_Source')]"
+					"Monthly_10022019_Once_properties_SourceToTarget_parameters_Source": {
+						"value": "[parameters('Monthly_10022019_Once_properties_SourceToTarget_parameters_Source')]"
 					}
 				}
 			},
