@@ -16,10 +16,17 @@ def main(req: func.HttpRequest, msg: func.Out[func.QueueMessage]) -> str:
     except ValueError:
         pass
 
+    # Extract some information from the request
     name = req.params.get('name')
+    # You can use parameters like the below for filtering results
+    name = req.params.get('region')
+    # Specify a sort option if you will sort the results
+    name = req.params.get('sort')
+    
     category = req.route_params.get('category')
     id = req.route_params.get('id')
 
+    # and log
     logging.info(f"Parameter - name: {name}")
     logging.info(f"Route - category: {category}")
     logging.info(f"Route - id: {id}")
