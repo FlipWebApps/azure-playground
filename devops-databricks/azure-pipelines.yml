@@ -1,0 +1,45 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - devops-databricks/*
+
+pool:
+  vmImage: 'Ubuntu-16.04'
+
+variables:
+- name: NotebookName
+  value: helloworld
+
+steps:
+- bash: |
+    mkdir -p "$(Build.ArtifactStagingDirectory)/arm_template"
+    cp devops-databricks/arm-template/parameters.json devops-databricks/arm-template/template.json "$(Build.ArtifactStagingDirectory)/arm_template/"
+  displayName: 'Include Azure Resource Manager template Build Artifacts'
+- bash: |
+    mkdir -p "$(Build.ArtifactStagingDirectory)/notebook"
+    cp devops-databricks/notebooks/$(NotebookName).py "$(Build.ArtifactStagingDirectory)/notebook/$(NotebookName)-$(Build.SourceVersion).py"
+    cp devops-databricks/notebook-run.json.tmpl "$(Build.ArtifactStagingDirectory)/notebook/notebook-run.json.tmpl"
+  displayName: 'Include Notebook Build Artifacts'
+- bash: |
+    mkdir -p "$(Build.ArtifactStagingDirectory)/CI"
+    cp devops-databricks/databricks-submit-job.ps1 "$(Build.ArtifactStagingDirectory)/CI/"
+  displayName: 'Include CI Artifacts'
+- task: PublishBuildArtifacts@1
+  displayName: Publish ARM Template Build Artifacts
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)/arm_template'
+    artifactName: arm_template
+- task: PublishBuildArtifacts@1
+  displayName: Publish Notebook Build Artifacts
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)/notebook'
+    artifactName: notebook
+- task: PublishBuildArtifacts@1
+  displayName: Publish CI Build Artifacts
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)/CI'
+    artifactName: CI

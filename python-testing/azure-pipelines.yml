@@ -1,0 +1,94 @@
+resources:
+- repo: self
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - python-testing/*
+
+jobs:
+- job: Phase_1
+  displayName: Build and Test
+  condition: succeeded()
+  pool:
+    name: Hosted Ubuntu 1604
+  strategy:
+    matrix:
+      Python27:
+        python.version: '2.7'
+      Python35:
+        python.version: '3.5'
+      Python36:
+        python.version: '3.6'
+      Python37:
+        python.version: '3.7'
+    maxParallel: 3
+#  variables:
+#    python.version: '2.7, 3.5, 3.6, 3.7'
+
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python $(python.version)'
+    inputs:
+      versionSpec: '$(python.version)'
+
+  - script: 'python -m pip install --upgrade pip'
+    displayName: 'Install dependencies'
+
+  - script: pip install -r requirements.txt
+    displayName: 'Install requirements'
+    enabled: false
+
+  - script: |
+      python -m pip install flake8
+      flake8 .
+    displayName: 'Run lint tests'
+
+  - script: |
+      pip install pytest
+      pip install pytest-cov
+      pytest python-testing --doctest-modules --junitxml=junit/test-results.xml --cov --cov-report=xml --cov-report=html
+    displayName: pytest
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results **/test-results.xml'
+    inputs:
+      testResultsFiles: '**/test-results.xml'
+      testRunTitle: 'Python $(python.version)'
+
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+      reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+
+
+- job: Phase_2
+  displayName: Publish
+  dependsOn: Phase_1
+  condition: succeeded()
+  pool:
+    name: Hosted Ubuntu 1604
+  steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python >= 3.6'
+    inputs:
+      versionSpec: '>= 3.6'
+    enabled: false
+
+  - script: 'python setup.py sdist'
+    displayName: 'Build sdist'
+    enabled: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: dist'
+    inputs:
+      PathtoPublish: dist
+      ArtifactName: dist
+    enabled: false
+
+

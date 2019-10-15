@@ -1,0 +1,54 @@
+# Set these variables through the portal interface.
+#variables:
+#  ConnectedServiceName: '<your-service-connection>'
+#  WebAppName: 'msdocs-flaskpipelines'
+
+
+trigger:
+  batch: true
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - python-webapp/*
+
+
+pool:
+  name: Hosted Ubuntu 1604
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.6'
+    architecture: 'x64'
+
+- script: |
+    python3.6 -m venv antenv
+    source antenv/bin/activate
+    pip3.6 install setuptools
+    pip3.6 install -r python-webapp/requirements.txt
+
+  # The displayName is shows in the pipeline UI when a build runs
+  displayName: 'Install Dependencies'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/python-webapp'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
+    replaceExistingArchive: true
+    verbose: # Optional
+
+- task: AzureRMWebAppDeployment@4
+  displayName: Azure App Service Deploy
+  inputs:
+    appType: webAppLinux
+    RuntimeStack: 'PYTHON|3.6'
+    ConnectedServiceName: $(ConnectedServiceName)
+    WebAppName: $(WebAppName)
+    Package: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
+
+    # Default startup command should find a flask app at app.py, but we add our own startup command as an example.
+    StartupCommand: 'gunicorn --bind=0.0.0.0 --timeout 600 app:app'

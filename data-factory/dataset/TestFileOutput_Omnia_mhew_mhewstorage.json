@@ -1,0 +1,21 @@
+{
+	"name": "TestFileOutput_Omnia_mhew_mhewstorage",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Omnia_mhew_mhewstorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@concat('Copy_', pipeline().parameters.Source)",
+					"type": "Expression"
+				},
+				"container": "df-test"
+			}
+		}
+	}
+}
