@@ -2,6 +2,18 @@
 
 A repository for testing various Azure functionality.
 
+## Setup
+Create and activate a python virtual environment:
+
+```bash
+conda update conda
+conda install nb_conda
+conda create -n ddpdenv python=3.7.2
+conda activate ddpdenv
+pip install --upgrade setuptools
+```
+See any additional readme in each folder for further setup or run instructions.
+
 ## azure-functions
 
 ## data-factory
