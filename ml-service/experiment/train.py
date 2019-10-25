@@ -94,27 +94,27 @@ def train(output_dir='outputs', kernel='linear', penalty=1.0):
         run.log('Accuracy', np.float(accuracy))
 
     # Plot non-normalized confusion matrix
-    fig, _ = plot_confusion_matrix(y_test, y_pred, classes=class_names,
-                                   title='Confusion matrix, without normalization')
-    plt.savefig(os.path.join(output_dir, 'confusion_matrix.png'))
+    _, _ = plot_confusion_matrix(y_test, y_pred, classes=class_names,
+                                 title='Confusion matrix, without normalization')
     if run is not None:
-        run.log_image('Confusion matrix, without normalization', plot=fig)
+        run.log_image('Confusion matrix, without normalization', plot=plt)
+    else:
+        plt.savefig(os.path.join(output_dir, 'confusion_matrix.png'))
 
     # Plot normalized confusion matrix
-    fig, _ = plot_confusion_matrix(y_test, y_pred, classes=class_names,
-                                   normalize=True,
-                                   title='Normalized confusion matrix')
-    # plt.plot()
-    plt.savefig(os.path.join(output_dir, 'confusion_matrix_normalised.png'))
+    _, _ = plot_confusion_matrix(y_test, y_pred, classes=class_names,
+                                 normalize=True,
+                                 title='Normalized confusion matrix')
     if run is not None:
         run.log_image('Normalized confusion matrix',  plot=plt)
-
-    # os.makedirs(output_dir, exist_ok=True)
+    else:
+        plt.savefig(os.path.join(output_dir, 'confusion_matrix_normalised.png'))
 
     # files saved in the "outputs" folder are automatically uploaded into
     # Azure ML Service run history
-    joblib.dump(svm_model_linear,
-                os.path.join(output_dir, 'model', 'model.joblib'))
+    model_path = os.path.join(output_dir, 'model')
+    os.makedirs(model_path, exist_ok=True)
+    joblib.dump(svm_model_linear, os.path.join(model_path, 'model.joblib'))
 
 
 def main():
@@ -122,12 +122,12 @@ def main():
     # environment parameters
     # parser.add_argument(
     #     '--data-folder',
-    #     help="GCS or local path to training data",
+    #     help="local path to training data",
     #     required=True
     # )
     parser.add_argument(
         "--output-dir", type=str, default="outputs",
-        help="GCS location to write checkpoints and export models"
+        help="location to write checkpoints and export models"
     )
 
     # training specific parameters
