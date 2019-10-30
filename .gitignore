@@ -12,3 +12,4 @@ azure-functions/.vscode/
 ml-service/.ipynb_checkpoints/
 *__pycache__*
 ml-service/experiment/outputs/
+ml-service/outputs/

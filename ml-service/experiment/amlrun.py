@@ -5,7 +5,7 @@ from azureml.core import Run
 # init run param to check if running within AML
 def get_AMLRun():
     """Try and get the Azure Machine Learning run
-    
+
     Returns:
         Run: The Experiment run or None if no active run.
     """

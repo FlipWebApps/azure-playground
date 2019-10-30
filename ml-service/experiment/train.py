@@ -95,7 +95,7 @@ def train(output_dir='outputs', kernel='linear', penalty=1.0):
 
     # Plot non-normalized confusion matrix
     _, _ = plot_confusion_matrix(y_test, y_pred, classes=class_names,
-                                 title='Confusion matrix, without normalization')
+                                 title='Confusion matrix, no normalization')
     if run is not None:
         run.log_image('Confusion matrix, without normalization', plot=plt)
     else:
@@ -108,7 +108,8 @@ def train(output_dir='outputs', kernel='linear', penalty=1.0):
     if run is not None:
         run.log_image('Normalized confusion matrix',  plot=plt)
     else:
-        plt.savefig(os.path.join(output_dir, 'confusion_matrix_normalised.png'))
+        plt.savefig(
+            os.path.join(output_dir, 'confusion_matrix_normalised.png'))
 
     # files saved in the "outputs" folder are automatically uploaded into
     # Azure ML Service run history
@@ -126,8 +127,8 @@ def main():
     #     required=True
     # )
     parser.add_argument(
-        "--output-dir", type=str, default="outputs",
-        help="location to write checkpoints and export models"
+        "--output-dir", type=str, default=os.path.join('..', 'outputs'),
+        help='location to writeoutput relative to this script'
     )
 
     # training specific parameters
