@@ -40,7 +40,7 @@ def main(req: func.HttpRequest,
             name = req_body.get('name')
 
     if name:
-        response_message = (f"Hello {name}, category {category}, "
+        response_message = (f"Hello v2 {name}, category {category}, "
                             f"id {id}, sort {sort}, region {region}!")
 
         # send a message to the QueueMessage output binding
