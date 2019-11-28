@@ -29,3 +29,8 @@ The functions can be accessed through different URL's where hte latter takes a c
 
 http://localhost:7071/api/HttpTrigger?name=Myname
 http://localhost:7071/api/products/cat/10?name=HiRoute
+
+## Dev Ops (CI/CD)
+
+There are build pipeline for archiving the files and a seperate release pipeline for deployment.
+https://dev.azure.com/mhew/azure-playground
