@@ -1,0 +1,4 @@
+azureml-sdk[notebooks,automl]
+joblib
+matplotlib
+numpy
