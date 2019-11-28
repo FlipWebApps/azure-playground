@@ -2,27 +2,19 @@
   "scriptFile": "__init__.py",
   "bindings": [
     {
-      "authLevel": "function",
+      "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
       "methods": [
         "get",
         "post"
-      ],
-      "route": "products/{category:alpha}/{id:int?}"
+      ]
     },
     {
       "type": "http",
       "direction": "out",
       "name": "$return"
-    },
-    {
-      "type": "queue",
-      "direction": "out",
-      "name": "msg",
-      "queueName": "outqueue",
-      "connection": "AzureWebJobsStorage"
-    }    
+    }
   ]
 }

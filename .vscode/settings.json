@@ -1,6 +1,11 @@
 {
-    "python.pythonPath": ".env\\Scripts\\python.exe",
+    "python.pythonPath": "C:\\Applications\\Miniconda3\\envs\\azure\\python.exe",
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "azureFunctions.deploySubpath": "azure-functions",
+    "azureFunctions.scmDoBuildDuringDeployment": true,
+    "azureFunctions.projectLanguage": "Python",
+    "azureFunctions.projectRuntime": "~2",
+    "debug.internalConsoleOptions": "neverOpen"
 }

@@ -3,9 +3,9 @@ import logging
 import azure.functions as func
 
 
-def main(req: func.HttpRequest, msg: func.Out[func.QueueMessage]) -> str:
-    # For testing we log the content
-    logging.info(f"HTTP trigger executed!")
+def main(req: func.HttpRequest,
+         outputQueueItem: func.Out[func.QueueMessage]) -> func.HttpResponse:
+    logging.info('Python HTTP trigger function processed a request.')
     logging.info(f"Method: {req.method}")
     logging.info(f"Headers: {req.headers}")
     logging.info(f"Params: {req.params}")
@@ -19,10 +19,10 @@ def main(req: func.HttpRequest, msg: func.Out[func.QueueMessage]) -> str:
     # Extract some information from the request
     name = req.params.get('name')
     # You can use parameters like the below for filtering results
-    name = req.params.get('region')
+    region = req.params.get('region')
     # Specify a sort option if you will sort the results
-    name = req.params.get('sort')
-    
+    sort = req.params.get('sort')
+
     category = req.route_params.get('category')
     id = req.route_params.get('id')
 
@@ -40,11 +40,14 @@ def main(req: func.HttpRequest, msg: func.Out[func.QueueMessage]) -> str:
             name = req_body.get('name')
 
     if name:
+        response_message = (f"Hello {name}, category {category}, "
+                            f"id {id}, sort {sort}, region {region}!")
+
         # send a message to the QueueMessage output binding
-        msg.set(name)
+        outputQueueItem.set(response_message)
 
         # Return the HttpResponse
-        return func.HttpResponse(f"Hello to {name}!")
+        return func.HttpResponse(response_message)
     else:
         return func.HttpResponse(
              "Please pass a name on the query string or in the request body",
