@@ -17,9 +17,11 @@ See any additional readme in each folder for further setup or run instructions.
 
 ## azure-functions
 
-A basic Python HTTP->Azure storage function app.
+[![Build Status](https://dev.azure.com/mhew/azure-playground/_apis/build/status/azure-functions)](https://dev.azure.com/mhew/azure-playground/_build/latest?definitionId=11)
 
-Deploys automatically using Azure DevOps. Alternatively open the folder azure-functions in VS Code with the Azure Functions extension added to be able to deploy manually through VS Code (doesn't work if opened from the repo root).
+Basic Python HTTP and HTTP with route->Azure storage functions.
+
+Deploys automatically using Azure DevOps. Alternatively through VS Code or the azure CLI.
 
 ## data-factory
 
