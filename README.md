@@ -4,6 +4,10 @@ A repository for testing various Azure functionality.
 
 ## azure-functions
 
+A basic Python HTTP->Azure storage function app.
+
+Deploys automatically using Azure DevOps. Alternatively open the folder azure-functions in VS Code with the Azure Functions extension added to be able to deploy manually through VS Code (doesn't work if opened from the repo root).
+
 ## data-factory
 
 ## devops-databricks: 
