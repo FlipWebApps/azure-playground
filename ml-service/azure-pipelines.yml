@@ -61,7 +61,7 @@ steps:
 - task: AzureCLI@1
   displayName: 'Deploy Model'
   inputs:
-    azureSubscription: '$(Parameters.connectedServiceNameARM)'
+    azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
     inlineScript: |
      # Deploy the registered model to AKS (Learn more: https://aka.ms/aml-cli-model).
