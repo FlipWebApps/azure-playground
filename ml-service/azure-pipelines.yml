@@ -32,7 +32,7 @@ steps:
 - task: AzureCLI@1
   displayName: 'Install Azure CLI ML Extension'
   inputs:
-    azureSubscription: '$(Parameters.connectedServiceNameARM)'
+    azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
     inlineScript: |
      # Install the Azure ML CLI extension (Learn more: https://aka.ms/aml-cli).
@@ -41,7 +41,7 @@ steps:
 - task: AzureCLI@1
   displayName: Setup
   inputs:
-    azureSubscription: '$(Parameters.connectedServiceNameARM)'
+    azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
     inlineScript: |
      # Attach a workspace configuration to a folder to enable CLI contextual awareness (Learn more: https://aka.ms/aml-cli-resource).
@@ -50,7 +50,7 @@ steps:
 - task: AzureCLI@1
   displayName: 'Train Model'
   inputs:
-    azureSubscription: '$(Parameters.connectedServiceNameARM)'
+    azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
     inlineScript: |
      # Start a run of the experiment (Learn more: https://aka.ms/aml-cli-run).
