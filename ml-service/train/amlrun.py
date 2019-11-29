@@ -10,7 +10,7 @@ def get_AMLRun():
         Run: The Experiment run or None if no active run.
     """
     try:
-        run = Run.get_submitted_run()
+        run = Run.get_context()
         return run
     except Exception as e:
         print("Caught = {}".format(e.message))

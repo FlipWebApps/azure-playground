@@ -113,9 +113,10 @@ def train(output_dir='outputs', kernel='linear', penalty=1.0):
 
     # files saved in the "outputs" folder are automatically uploaded into
     # Azure ML Service run history
-    model_path = os.path.join(output_dir, 'model')
-    os.makedirs(model_path, exist_ok=True)
-    joblib.dump(svm_model_linear, os.path.join(model_path, 'model.joblib'))
+    model_folder = os.path.join(output_dir, 'model')
+    model_path = os.path.join(model_folder, 'mltest-iris-sklearn.joblib')
+    os.makedirs(model_folder, exist_ok=True)
+    joblib.dump(svm_model_linear, model_path)
 
 
 def main():
