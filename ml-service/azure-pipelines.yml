@@ -1,3 +1,4 @@
+# See https://docs.microsoft.com/en-us/azure/devops/pipelines/targets/azure-machine-learning?view=azure-devops&tabs=yaml for info.
 trigger:
   batch: true
   branches:
@@ -8,30 +9,12 @@ trigger:
     - ml-service/*
 
 pool:
-  name: Azure Pipelines
-  vmImage: ubuntu-16.04
-#Your build pipeline references an undefined variable named ‘Parameters.connectedServiceNameARM’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references an undefined variable named ‘Parameters.connectedServiceNameARM’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references the ‘workspaceName’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘workspaceName’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘resourceGroupName’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references an undefined variable named ‘Parameters.connectedServiceNameARM’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references the ‘runConfig’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘runConfig’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘modelName’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘modelName’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘modelAssetPath’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references an undefined variable named ‘Parameters.connectedServiceNameARM’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build pipeline references the ‘serviceName’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘serviceName’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build pipeline references the ‘aksComputeName’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-variables:
-  inferenceConfigFile: 'inferenceConfig.yml'
-  deploymentConfigFile: 'deploymentConfig.yml'
+  vmImage: 'Ubuntu-16.04'
 
 steps:
+
 - task: AzureCLI@1
-  displayName: 'Install Azure CLI ML Extension'
+  displayName: 'Install the CLI'
   inputs:
     azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
@@ -40,30 +23,77 @@ steps:
      az extension add -n azure-cli-ml
 
 - task: AzureCLI@1
-  displayName: Setup
+  displayName: 'Attach folder to workspace'
   inputs:
     azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
     inlineScript: |
      # Attach a workspace configuration to a folder to enable CLI contextual awareness (Learn more: https://aka.ms/aml-cli-resource).
-     az ml folder attach -w $(workspaceName) -g $(resourceGroupName)
+     'az ml folder attach -w myworkspace -g myresourcegroup'
 
 - task: AzureCLI@1
-  displayName: 'Train Model'
+  displayName: 'Create compute for training'
   inputs:
     azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
-    inlineScript: |
-     # Start a run of the experiment (Learn more: https://aka.ms/aml-cli-run).
-     { az ml run submit-script -c $(runConfig) -t runmetadata.json; } &&
-     # Register a model with Azure Machine Learning (Learn more: https://aka.ms/aml-cli-model).
-     { az ml model register -n $(modelName) --asset-path $(modelAssetPath) -f runmetadata.json -t modelmetadata.json; }
-
+    inlineScript: 'az ml computetarget create cpu-cluster -n cpu --vm-size STANDARD_D2_V2 --max-nodes 4'
+  
 - task: AzureCLI@1
-  displayName: 'Deploy Model'
+  displayName: 'Submit script run'
   inputs:
     azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
-    inlineScript: |
-     # Deploy the registered model to AKS (Learn more: https://aka.ms/aml-cli-model).
-     az ml model deploy -n $(serviceName) --overwrite -f modelmetadata.json --ic $(inferenceConfigFile) --dc $(deploymentConfigFile) --ct $(aksComputeName)
+    inlineScript: 'az ml run submit-script -c sklearn -e test -d myenv.yml train.py'
+
+- task: AzureCLI@1
+  displayName: 'Register model'
+  inputs:
+    azureSubscription: '$(connectedServiceNameARM)'
+    scriptLocation: inlineScript
+    inlineScript: 'az ml model register -n mymodel -p sklearn_regression_model.pkl -t model.json'
+
+- task: AzureCLI@1
+  displayName: 'Deploy model'
+  inputs:
+    azureSubscription: '$(connectedServiceNameARM)'
+    scriptLocation: inlineScript
+    inlineScript: 'az ml model deploy -n acicicd -f model.json --ic inferenceConfig.yml --dc deploymentConfig.yml --overwrite'
+
+
+# - task: AzureCLI@1
+#   displayName: 'Install Azure CLI ML Extension'
+#   inputs:
+#     azureSubscription: '$(connectedServiceNameARM)'
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#      # Install the Azure ML CLI extension (Learn more: https://aka.ms/aml-cli).
+#      az extension add -n azure-cli-ml
+
+# - task: AzureCLI@1
+#   displayName: Setup
+#   inputs:
+#     azureSubscription: '$(connectedServiceNameARM)'
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#      # Attach a workspace configuration to a folder to enable CLI contextual awareness (Learn more: https://aka.ms/aml-cli-resource).
+#      az ml folder attach -w $(workspaceName) -g $(resourceGroupName)
+
+# - task: AzureCLI@1
+#   displayName: 'Train Model'
+#   inputs:
+#     azureSubscription: '$(connectedServiceNameARM)'
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#      # Start a run of the experiment (Learn more: https://aka.ms/aml-cli-run).
+#      { az ml run submit-script -c $(runConfig) -t runmetadata.json; } &&
+#      # Register a model with Azure Machine Learning (Learn more: https://aka.ms/aml-cli-model).
+#      { az ml model register -n $(modelName) --asset-path $(modelAssetPath) -f runmetadata.json -t modelmetadata.json; }
+
+# - task: AzureCLI@1
+#   displayName: 'Deploy Model'
+#   inputs:
+#     azureSubscription: '$(connectedServiceNameARM)'
+#     scriptLocation: inlineScript
+#     inlineScript: |
+#      # Deploy the registered model to AKS (Learn more: https://aka.ms/aml-cli-model).
+#      az ml model deploy -n $(serviceName) --overwrite -f modelmetadata.json --ic $(inferenceConfigFile) --dc $(deploymentConfigFile) --ct $(aksComputeName)
