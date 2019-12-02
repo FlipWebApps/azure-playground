@@ -1,0 +1,23 @@
+apiVersion: radix.equinor.com/v1
+kind: RadixApplication
+metadata:
+  name: mhew-mltest-iris
+spec:
+  environments:
+    - name: dev
+      build:
+        from: master
+    - name: prod
+      build:
+        from: release
+  components:
+    - name: mltest-iris
+      image: mhewmlservicew8204786564.azurecr.io/mltest-iris-sklearn:latest
+      ports:
+        - name: http
+          port: 80
+      publicPort: http
+  privateImageHubs:
+    mhewmlservicew8204786564.azurecr.io:
+      username: 2c7599f8-185c-45b5-b9f2-376587e070fd
+      email: mark_a_hewitt@yahoo.co.uk
