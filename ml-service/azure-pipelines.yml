@@ -45,7 +45,7 @@ steps:
   inputs:
     azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
-    workingDirectory: 
+    workingDirectory: ml-service
     inlineScript: |
      # runconfig (-c) should be in a subfolder
      pwd
