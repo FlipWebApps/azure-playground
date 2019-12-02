@@ -1,4 +1,6 @@
-# See https://docs.microsoft.com/en-us/azure/devops/pipelines/targets/azure-machine-learning?view=azure-devops&tabs=yaml for info.
+# See:
+# - https://docs.microsoft.com/en-us/azure/devops/pipelines/targets/azure-machine-learning?view=azure-devops&tabs=yaml for info.
+# - https://docs.microsoft.com/en-us/azure/machine-learning/service/reference-azure-machine-learning-cli#experiments
 trigger:
   batch: true
   branches:
@@ -29,54 +31,39 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
      # Attach a workspace configuration to a folder to enable CLI contextual awareness (Learn more: https://aka.ms/aml-cli-resource).
-     'az ml folder attach -w myworkspace -g myresourcegroup'
+     az ml folder attach -w $(workspaceName) -g $(resourceGroupName)
 
 - task: AzureCLI@1
   displayName: 'Create compute for training'
   inputs:
     azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
-    inlineScript: 'az ml computetarget create cpu-cluster -n cpu --vm-size STANDARD_D2_V2 --max-nodes 4'
+    inlineScript: 'az ml computetarget create amlcompute -n cpu-compute --vm-size STANDARD_D2_V2 --max-nodes 4'
   
 - task: AzureCLI@1
   displayName: 'Submit script run'
   inputs:
     azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
-    inlineScript: 'az ml run submit-script -c sklearn -e test -d myenv.yml train.py'
+    inlineScript: |
+     # runconfig (-c) should be in a subfolder
+     az ml run submit-script -c sklearn -e mltest-iris-devops -d myenv.yml --source-directory train train.py
 
 - task: AzureCLI@1
   displayName: 'Register model'
   inputs:
     azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
-    inlineScript: 'az ml model register -n mymodel -p sklearn_regression_model.pkl -t model.json'
-
-- task: AzureCLI@1
-  displayName: 'Deploy model'
-  inputs:
-    azureSubscription: '$(connectedServiceNameARM)'
-    scriptLocation: inlineScript
-    inlineScript: 'az ml model deploy -n acicicd -f model.json --ic inferenceConfig.yml --dc deploymentConfig.yml --overwrite'
-
+    inlineScript: 'az ml model register -n mltest-iris -p mltest-iris-sklearn.joblib'
 
 # - task: AzureCLI@1
-#   displayName: 'Install Azure CLI ML Extension'
+#   displayName: 'Deploy model'
 #   inputs:
 #     azureSubscription: '$(connectedServiceNameARM)'
 #     scriptLocation: inlineScript
-#     inlineScript: |
-#      # Install the Azure ML CLI extension (Learn more: https://aka.ms/aml-cli).
-#      az extension add -n azure-cli-ml
+#     inlineScript: 'az ml model deploy -n acicicd -f model.json --ic inferenceConfig.yml --dc deploymentConfig.yml --overwrite'
 
-# - task: AzureCLI@1
-#   displayName: Setup
-#   inputs:
-#     azureSubscription: '$(connectedServiceNameARM)'
-#     scriptLocation: inlineScript
-#     inlineScript: |
-#      # Attach a workspace configuration to a folder to enable CLI contextual awareness (Learn more: https://aka.ms/aml-cli-resource).
-#      az ml folder attach -w $(workspaceName) -g $(resourceGroupName)
+
 
 # - task: AzureCLI@1
 #   displayName: 'Train Model'
