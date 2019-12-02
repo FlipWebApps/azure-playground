@@ -45,9 +45,7 @@ steps:
   inputs:
     azureSubscription: '$(connectedServiceNameARM)'
     scriptLocation: inlineScript
-    inlineScript: |
-     # runconfig (-c) should be in a subfolder
-     az ml run submit-script -c sklearn -e mltest-iris-devops -d myenv.yml --source-directory train train.py
+    inlineScript: 'az ml run submit-script -c sklearn -e mltest-iris-devops -d myenv.yml --source-directory train train.py'
 
 - task: AzureCLI@1
   displayName: 'Register model'
