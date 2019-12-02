@@ -52,12 +52,16 @@ steps:
      ls
      az ml run submit-script -c sklearn -e mltest-iris-devops -d myenv.yml --source-directory train train.py
 
-- task: AzureCLI@1
-  displayName: 'Register model'
-  inputs:
-    azureSubscription: '$(connectedServiceNameARM)'
-    scriptLocation: inlineScript
-    inlineScript: 'az ml model register -n mltest-iris -p mltest-iris-sklearn.joblib'
+# The below (from examples) will always fail as the model only exists in the run output. We would need to download
+# so perhaps best just to use python and the API where we have more control.
+
+
+# - task: AzureCLI@1
+#   displayName: 'Register model'
+#   inputs:
+#     azureSubscription: '$(connectedServiceNameARM)'
+#     scriptLocation: inlineScript
+#     inlineScript: 'az ml model register -n mltest-iris -p mltest-iris-sklearn.joblib'
 
 # - task: AzureCLI@1
 #   displayName: 'Deploy model'
