@@ -12,12 +12,12 @@ spec:
         from: release
   components:
     - name: mltest-iris
-      image: mhewmlservicew8204786564.azurecr.io/mltest-iris-sklearn:latest
+      image: mhewmlservicew8204786564.azurecr.io/mltest-iris-sklearn:1
       ports:
         - name: http
-          port: 80
+          port: 5001
       publicPort: http
   privateImageHubs:
     mhewmlservicew8204786564.azurecr.io:
-      username: 2c7599f8-185c-45b5-b9f2-376587e070fd
+      username: 45df7a08-56f9-4651-9881-754a84b9f29b
       email: mark_a_hewitt@yahoo.co.uk
