@@ -45,7 +45,7 @@ jobs:
 
   - script: |
       python -m pip install flake8
-      flake8 .
+      flake8 python-testing
     displayName: 'Run lint tests'
 
   - script: |
