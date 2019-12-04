@@ -4,34 +4,25 @@ wallet.pt / test_wallet.py example from:
 
 https://semaphoreci.com/community/tutorials/testing-python-applications-with-pytest
 
-## Running locally
+## Setup
 
-### Setup using
-```
+Setup a python environment as discussed in the main README.md and then from this folder run:
+
+```bash
 cd python-testing
-python -m venv pytest-env
-```
-
-### Activate environment
-Max / Linux
-```
-source pytest-env/bin/activate
-```
-
-Windows
-```
-python-webapp\Scripts\activate
-```
-
-### Install Dependencies
-```
 pip install -r requirements.txt
 ```
 
-### Run using
+## Lint
 
+```bash
+flake8
 ```
-flask run
+
+## Test
+
+```bash
+pytest
 ```
 
 ## Azure DevOps Pipeline

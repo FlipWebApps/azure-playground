@@ -36,8 +36,7 @@ Deploys automatically using Azure DevOps. Alternatively through VS Code or the a
 ML Service experiment with DevOps / MLOps
 
 ## python-testing
-
-[![Build Status](https://dev.azure.com/mhew/test/_apis/build/status/python-testing)](https://dev.azure.com/mhew/test/_build/latest?definitionId=3)
+[![Build Status](https://dev.azure.com/mhew/azure-playground/_apis/build/status/python-testing)](https://dev.azure.com/mhew/azure-playground/_build/latest?definitionId=13)
 
 Azure DevOps example for running python tests
 
