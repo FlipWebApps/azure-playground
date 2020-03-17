@@ -7,7 +7,7 @@
 			"connectionString": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
-					"referenceName": "AzureKeyVault1",
+					"referenceName": "mhew-keyvault",
 					"type": "LinkedServiceReference"
 				},
 				"secretName": "data-factory-blob-connection"
