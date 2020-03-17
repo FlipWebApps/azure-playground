@@ -5,6 +5,17 @@
 			"referenceName": "mhewstoragev2",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"Directory": {
+				"type": "String"
+			},
+			"Container": {
+				"type": "String"
+			},
+			"File": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "Generic"
 		},
@@ -13,8 +24,18 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "country-codes.csv",
-				"container": "data-factory-test"
+				"fileName": {
+					"value": "@dataset().File",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Directory",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().Container",
+					"type": "Expression"
+				}
 			}
 		}
 	}
