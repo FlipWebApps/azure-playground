@@ -1,0 +1,17 @@
+{
+	"name": "SourceDataset_tqz",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "DataHub",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation",
+				"relativeUrl": "core/country-list/r/data.csv"
+			}
+		}
+	}
+}

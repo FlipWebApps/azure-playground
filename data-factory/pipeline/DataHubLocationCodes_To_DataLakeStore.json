@@ -1,0 +1,52 @@
+{
+	"name": "DataHubLocationCodes_To_DataLakeStore",
+	"properties": {
+		"description": "Copy data hub location codes to data lake store",
+		"activities": [
+			{
+				"name": "Copy_tqz",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "core/country-list/r/data.csv"
+					},
+					{
+						"name": "Destination",
+						"value": "data-factory-test//country-codes.csv"
+					}
+				],
+				"typeProperties": {
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_tqz",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_tqz",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
