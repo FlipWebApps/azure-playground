@@ -1,0 +1,21 @@
+{
+	"name": "DestinationDataset_tqz_copy1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "mhewstoragev2",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Generic"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "country-codes.csv",
+				"container": "data-factory-test"
+			}
+		}
+	}
+}
