@@ -1,5 +1,5 @@
 {
-	"name": "DataHub2",
+	"name": "DataHub",
 	"properties": {
 		"annotations": [],
 		"type": "HttpServer",
