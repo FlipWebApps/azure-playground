@@ -1,5 +1,5 @@
 {
-	"name": "DestinationDataset_tqz_copy1",
+	"name": "mhewstoragev2File",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "mhewstoragev2",
