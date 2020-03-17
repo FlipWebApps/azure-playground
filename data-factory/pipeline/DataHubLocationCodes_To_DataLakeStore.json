@@ -42,13 +42,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DestinationDataset_tqz",
+						"referenceName": "mhewstoragev2_CountryCodes",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DestinationDataset_tqz",
+						"referenceName": "mhewstoragev2_CountryCodes",
 						"type": "DatasetReference"
 					}
 				]

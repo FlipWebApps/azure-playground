@@ -1,5 +1,5 @@
 {
-	"name": "DestinationDataset_tqz",
+	"name": "mhewstoragev2_CountryCodes",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "mhewstoragev2",

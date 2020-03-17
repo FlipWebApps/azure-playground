@@ -1,5 +1,5 @@
 {
-	"name": "mhewstoragev2File",
+	"name": "mhewstoragev2_File",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "mhewstoragev2",

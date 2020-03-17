@@ -1,5 +1,5 @@
 {
-	"name": "SourceDataset_tqz",
+	"name": "DataHub_CountryCodes",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "DataHub",
