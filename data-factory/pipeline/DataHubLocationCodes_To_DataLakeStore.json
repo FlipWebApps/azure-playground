@@ -25,6 +25,13 @@
 					}
 				],
 				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true
+						}
+					},
 					"sink": {
 						"type": "BinarySink",
 						"storeSettings": {
@@ -35,7 +42,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SourceDataset_tqz",
+						"referenceName": "DestinationDataset_tqz",
 						"type": "DatasetReference"
 					}
 				],
