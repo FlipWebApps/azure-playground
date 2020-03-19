@@ -1,0 +1,42 @@
+{
+	"name": "mhewstoragev2_File",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "mhewstoragev2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Directory": {
+				"type": "String"
+			},
+			"Container": {
+				"type": "String"
+			},
+			"File": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Generic"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().File",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().Directory",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().Container",
+					"type": "Expression"
+				}
+			}
+		}
+	}
+}
