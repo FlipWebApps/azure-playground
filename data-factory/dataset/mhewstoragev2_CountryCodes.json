@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "country-codes.csv",
+				"fileName": "country_codes.csv",
 				"container": "data-factory-test"
 			}
 		}

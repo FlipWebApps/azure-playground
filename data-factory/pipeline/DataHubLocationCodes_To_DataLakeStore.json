@@ -4,7 +4,7 @@
 		"description": "Copy data hub location codes to data lake store",
 		"activities": [
 			{
-				"name": "Copy_tqz",
+				"name": "CopyDataHubToStorage",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -28,8 +28,8 @@
 					"source": {
 						"type": "BinarySource",
 						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
 						}
 					},
 					"sink": {
@@ -42,7 +42,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "mhewstoragev2_CountryCodes",
+						"referenceName": "DataHub_CountryCodes",
 						"type": "DatasetReference"
 					}
 				],
