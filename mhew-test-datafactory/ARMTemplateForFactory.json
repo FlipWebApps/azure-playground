@@ -105,7 +105,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "HttpServerLocation",
-						"relativeUrl": "core/country-list/r/data.csv"
+						"relativeUrl": "core/country-list/r/data.csvasdf"
 					}
 				}
 			},
